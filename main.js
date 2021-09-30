@@ -29,14 +29,11 @@ const sampler = new Tone.Sampler({
     baseUrl: "https://jminjie.github.io/samples/banjo/",
 }).toDestination();
 
-var img1 = new Image();
-img1.src = 'guitar3_big.svg';
-
 animate();
 
-var flip = 1;
+var flip = [1, 1, 1, 1, 1, 1];
 function animate() {
-    ctx.drawImage(img1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.lineWidth = 5;
     ctx.strokeStyle = 'white';
 
@@ -47,8 +44,8 @@ function animate() {
             ctx.bezierCurveTo(strum_x[i] ,STRINGS_Y[i] + strum[i], strum_x[i]+50,STRINGS_Y[i] - strum[i], 5000,STRINGS_Y[i]);
             ctx.stroke();
             //strum[i] = -Math.abs(strum[i]/1.15);
-            strum[i] = flip * (Math.abs(strum[i]) - 0.2);
-            flip *= -1;
+            strum[i] = flip[i] * (Math.abs(strum[i]) - 0.2);
+            flip[i] *= -1;
         } else {
             strum[i] = 0;
             ctx.beginPath();
