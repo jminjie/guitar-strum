@@ -7,12 +7,16 @@ resize();
 
 function resize() {
     ctx.canvas.width  = document.body.scrollWidth;
-    ctx.canvas.height = 1400;
+    // total height of strings
+    ctx.canvas.height = 263;
 }
 
+// x position of the start of the string
 STRINGS_X = [512, 506, 499, 495, 500, 508];
-STRINGS_Y = [555.71, 602.72, 647.72, 694.72, 741.72, 787.72]
+// y position of the string
+STRINGS_Y = [20, 66, 112, 158, 204, 250];
 
+// y positions of user scroll to trigger the first strum
 SCROLL_TRIGGERS_Y = [500, 557, 557+45, 557+45+45, 557+45+45+45, 557+45+45+45+45];
 
 strum = [0, 0, 0, 0, 0, 0]
@@ -59,6 +63,7 @@ function animate() {
 
 function startStrum(i, x) {
     sampler.triggerAttackRelease(STRING_NOTE[i], Tone.context.currentTime);
+    // 15 pix strum displacement
     strum[i] = 15;
     strum_x[i] = x;
 }
@@ -78,6 +83,8 @@ function scrollStrum(event) {
     for (let i = 0; i < 6; i++) {
         if (Math.sign(lastScrollY - SCROLL_TRIGGERS_Y[i]) !=
                 Math.sign(window.scrollY - SCROLL_TRIGGERS_Y[i])) {
+            // when triggering strum from scroll, just imagine that user mouse
+            // is around 1000 (middle of the string)
             startStrum(i, 1000);
         }
     }
