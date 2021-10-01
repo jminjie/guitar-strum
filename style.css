@@ -12,3 +12,7 @@ html, body {
     width: 700px;
     margin: auto;
 }
+
+div {
+  overflow-x: hidden;
+}
