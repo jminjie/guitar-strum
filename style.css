@@ -15,9 +15,12 @@ h1:hover {
     color: red;
 }
 
-#blogtext {
+.blogtext {
     font-family: serif;
     font-size: 14pt;
+}
+
+p {
     margin: 2em 2em 2em 2em;
 }
 
@@ -30,6 +33,8 @@ footer {
     padding: 0 0 1em 0;
 }
 
-#center {
+.center {
     text-align: center;
+    background-image: url("sparkles.jpeg");
+    width: 100%;
 }
