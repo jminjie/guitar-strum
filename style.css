@@ -2,17 +2,34 @@ html, body {
   width:  100%;
   height: 100%;
   margin: 0;
-  background-color: #FAFAF7;
+  background-color: #41FAF7;
+}
+
+h1 {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+h1:hover {
+    color: red;
 }
 
 #blogtext {
-    font-family: 'Rubik', sans-serif;
+    font-family: serif;
     font-size: 14pt;
-    padding: 2em 0 2em 0;
-    width: 700px;
-    margin: auto;
+    margin: 2em 2em 2em 2em;
 }
 
 div {
   overflow-x: hidden;
+}
+
+footer {
+    text-align: center;
+    padding: 0 0 1em 0;
+}
+
+#center {
+    text-align: center;
 }

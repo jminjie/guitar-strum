@@ -20,6 +20,7 @@ STRINGS_Y = [35, 81, 127, 173, 219, 265];
 SCROLL_TRIGGERS_Y = [500, 557, 557+45, 557+45+45, 557+45+45+45, 557+45+45+45+45];
 
 GUITAR_VELOCITY = 0.1;
+PLUCK_DISPLACEMENT = 15;
 
 STRING_DECAY = 0.1;
 
@@ -121,7 +122,7 @@ function animate() {
         if (Math.abs(pluck[i]) > 1) {
             ctx.beginPath();
             ctx.moveTo(STRINGS_X[i], STRINGS_Y[i]);
-            ctx.bezierCurveTo(pluck_x[i] ,STRINGS_Y[i] + pluck[i], pluck_x[i]+50,STRINGS_Y[i] - pluck[i], 5000,STRINGS_Y[i]);
+            ctx.bezierCurveTo(pluck_x[i]+200, STRINGS_Y[i] + pluck[i], pluck_x[i]-200,STRINGS_Y[i] - pluck[i], 5000,STRINGS_Y[i]);
             ctx.stroke();
             pluck[i] = flip[i] * (Math.abs(pluck[i]) - STRING_DECAY);
             flip[i] *= -1;
@@ -159,6 +160,7 @@ Tone.Transport.start();
 var line_index = 0;
 player.load(LINES[line_index]);
 function playLineAndAdvance() {
+    window.removeEventListener("scroll", scrollPluck);
     player.start();
     if (line_index < LINES.length - 1) {
         line_index += 1;
@@ -168,17 +170,12 @@ function playLineAndAdvance() {
     if (chord_index == 8 || chord_index == 10) {
         // autoplay on chord 8 or 10
         for (let i = 0; i < 6; i++) {
-            let DELAY_S = 1.3;
+            let DELAY_S = 1.5;
             let note = STRING_NOTES[chord_index][i];
-            let time =  '+' + (DELAY_S + (i/14));
+            let time =  '+' + (DELAY_S + (i/25));
             Tone.Transport.schedule((time) => {
                 samplers[i].triggerAttack(note, Tone.context.currentTime, GUITAR_VELOCITY);
                 startPluck(i, 1000);
-                // advance chord automatically on 6th note
-                if (i == 5) {
-                    advanceChord();
-                    playLineAndAdvance();
-                }
             }, time);
         }
     }
@@ -188,8 +185,7 @@ function startPluck(i, x) {
     samplers[i].releaseAll();
     let note = STRING_NOTES[chord_index][i];
     samplers[i].triggerAttack(note, Tone.context.currentTime, GUITAR_VELOCITY);
-    // 15 pix pluck displacement
-    pluck[i] = 15;
+    pluck[i] = PLUCK_DISPLACEMENT;
     pluck_x[i] = x;
 }
 
